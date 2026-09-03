@@ -1,1 +1,194 @@
 @import "tailwindcss";
+
+@theme {
+  --font-display: "Unbounded", "Space Grotesk", sans-serif;
+  --font-body: "Space Grotesk", sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, monospace;
+
+  --color-void: #05080c;
+  --color-abyss: #0a1017;
+  --color-panel: #0c131c;
+  --color-line: #1d2b3a;
+  --color-line-soft: #141f2b;
+  --color-ink: #e8eef4;
+  --color-ink-dim: #93a7ba;
+  --color-ink-faint: #5b7186;
+  --color-ember: #ffb454;
+  --color-ember-hot: #ff7847;
+  --color-glacier: #57e0d0;
+  --color-glacier-deep: #2aa89b;
+
+  --animate-blink: blink 1.4s steps(2, start) infinite;
+  --animate-scan: scan 3.2s linear infinite;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+  --animate-spin-slow: spin 9s linear infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.15; }
+}
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 0.5; }
+}
+
+html,
+body,
+#root {
+  height: 100dvh; /* modern dynamic viewport — mobile toolbar aware */
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-void);
+  color: var(--color-ink);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── stage wrapper: 100dvh first, exact --vh JS fallback layered on top ── */
+.stage-h {
+  height: 100dvh;
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+/* ── film grain overlay (SVG turbulence, cheap) ── */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  z-index: 60;
+}
+
+/* ── blueprint grid for loading HUD ── */
+.blueprint {
+  background-image:
+    linear-gradient(rgba(87, 224, 208, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(87, 224, 208, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ── corner ticks for panels ── */
+.corner-ticks {
+  position: relative;
+}
+.corner-ticks::before,
+.corner-ticks::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--color-ember);
+  border-style: solid;
+}
+.corner-ticks::before {
+  top: -1px;
+  left: -1px;
+  border-width: 1px 0 0 1px;
+}
+.corner-ticks::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 1px 1px 0;
+}
+
+/* ── range inputs ── */
+input[type="range"].slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 18px;
+  background: transparent;
+  cursor: pointer;
+}
+input[type="range"].slider::-webkit-slider-runnable-track {
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    var(--color-ember) 0%,
+    var(--color-ember) var(--fill, 50%),
+    var(--color-line) var(--fill, 50%),
+    var(--color-line) 100%
+  );
+}
+input[type="range"].slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  margin-top: -5px;
+  background: var(--color-void);
+  border: 2px solid var(--color-ember);
+  border-radius: 1px;
+  transform: rotate(45deg);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+input[type="range"].slider:hover::-webkit-slider-thumb,
+input[type="range"].slider:focus-visible::-webkit-slider-thumb {
+  background: var(--color-ember);
+  transform: rotate(45deg) scale(1.15);
+}
+input[type="range"].slider::-moz-range-track {
+  height: 2px;
+  background: var(--color-line);
+}
+input[type="range"].slider::-moz-range-progress {
+  height: 2px;
+  background: var(--color-ember);
+}
+input[type="range"].slider::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  background: var(--color-void);
+  border: 2px solid var(--color-ember);
+  border-radius: 1px;
+  transform: rotate(45deg);
+}
+
+/* ── shimmer bar for the boot screen ── */
+.shimmer-bar {
+  background: linear-gradient(
+    90deg,
+    var(--color-line) 0%,
+    var(--color-ember) 40%,
+    var(--color-glacier) 60%,
+    var(--color-line) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+.status-dot {
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+/* line-mask reveal helper (GSAP animates the inner span's yPercent) */
+.mask-line {
+  overflow: hidden;
+  display: block;
+}
+
+::selection {
+  background: var(--color-ember);
+  color: var(--color-void);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-dot,
+  .shimmer-bar {
+    animation: none;
+  }
+}
