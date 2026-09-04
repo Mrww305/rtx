@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" style="background-color: #05080c">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="GRAVITON/01 — an interactive dark-matter physics field. 48 rigid bodies, Rapier WASM, cursor force-fields and positional spatial audio." />
+    <meta name="theme-color" content="#05080c" />
+    <title>GRAVITON/01 — Interactive Physics Field</title>
+
+    <!-- Google Fonts: preconnect + swap to keep LCP/CLS clean -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Paint the dark stage before first byte of JS — prevents white flash & CLS -->
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #05080c;
+        color: #e8eef4;
+        height: 100%;
+      }
+      #root {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
