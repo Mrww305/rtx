@@ -1,0 +1,29 @@
+# GRAVITON/01 — Interactive Physics Field — by Sajid Afridi
+
+> GRAVITON/01 — an interactive dark-matter physics field. 48 rigid bodies, Rapier WASM, cursor force-fields and positional spatial audio.
+
+## Author
+
+- Name: Sajid Afridi
+- Handle: mrww305
+- Role: AI Governance Architect, MLOps & Zero Trust Architect
+- Canonical profile: https://sajidafridi.com
+- This site: https://rtx.sajidafridi.com/
+
+## Identity
+
+- LinkedIn: https://www.linkedin.com/in/mr305afridi
+- GitHub: https://github.com/Mrww305
+- Kaggle: https://www.kaggle.com/mrww305
+- MegniToo: https://megnitoo.com
+- Pakistan Red Team: https://pakistanredteam.com
+- AIPakistani: https://aipakistani.com
+
+## Portfolio
+
+- Deep Space CV: https://sajidafridi.com
+- About: https://sajidafridi.com/about/
+- Experience: https://sajidafridi.com/experience/
+- Projects: https://sajidafridi.com/projects/
+- Live lab: https://sajidafridi.com/lab/
+- Contact: https://sajidafridi.com/contact/
